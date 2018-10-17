@@ -30,3 +30,28 @@ function lhfingerprintjs2_schema() {
   );
   return $schema;
 }
+
+/**
+ * @defgroup updates-7.x-to-1.x Updates from 7.x to 1.x
+ * @{
+ * Update functions from Drupal 7.x to Backdrop CMS 1.x.
+ */
+
+/**
+ * Move lhfingerprintjs2 settings from variables to config.
+ */
+
+function lhfingerprintjs2_update_1000() {
+  // Migrate variables to config.
+  $config = config('lhfingerprintjs2.settings');
+  $config->set('lhfingerprintjs2_record_login_data', update_variable_get('lhfingerprintjs2_record_login_data', TRUE));
+  $config->save();
+
+  // Delete variables.
+  update_variable_del('lhfingerprintjs2_record_login_data');
+}
+
+/*
+ * @} End of "defgroup updates-7.x-to-1.x"
+ * The next series of updates should start at 2000.
+ */

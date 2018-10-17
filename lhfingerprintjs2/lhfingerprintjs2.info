@@ -1,4 +1,5 @@
 name = Login History: Fingerprintjs2 support
 description = Additional detection of browser data to fingerprint a visitor
-core = 7.x
+backdrop = 1.x
+type = module
 dependencies[] = login_history

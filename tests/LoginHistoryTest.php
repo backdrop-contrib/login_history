@@ -18,13 +18,13 @@ class LoginHistoryCookieTest extends PHPUnit_Framework_TestCase {
       [
         'device_id' => '1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5',
         'cookie' => [
-          'Drupal_visitor_login_history' => '9f99d3be0c5524d6a551b00f1aee6b17ecb1d674ac83571d19093529b9b09736-1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5-19',
+          'Backdrop_visitor_login_history' => '9f99d3be0c5524d6a551b00f1aee6b17ecb1d674ac83571d19093529b9b09736-1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5-19',
         ],
       ],
       [
         'device_id' => '1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5',
         'cookie' => [
-          'Drupal_visitor_login_history' => '5b58eada6ac8e705e03b4c26c63800f1fdd88e3f93a2fefa04cff04db04ac951-1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5-1',
+          'Backdrop_visitor_login_history' => '5b58eada6ac8e705e03b4c26c63800f1fdd88e3f93a2fefa04cff04db04ac951-1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5-1',
         ],
       ]
     ];
@@ -40,7 +40,7 @@ class LoginHistoryCookieTest extends PHPUnit_Framework_TestCase {
    * No login history cookie present.
    */
   public function testMissingCookieException() {
-    // The cookie array should contain Drupal_visitor_login_history.
+    // The cookie array should contain Backdrop_visitor_login_history.
     $this->setExpectedException('Exception', 'Login history device id not present.');
     login_history_get_device_id_from_cookie([], $this->salt);
   }
@@ -51,7 +51,7 @@ class LoginHistoryCookieTest extends PHPUnit_Framework_TestCase {
   public function testInvalidCookie() {
     // The cookie should be 3 strings separated by hyphens.
     $this->setExpectedException('Exception', 'Invalid login history cookie data.');
-    login_history_get_device_id_from_cookie(['Drupal_visitor_login_history' => '9-1'], $this->salt);
+    login_history_get_device_id_from_cookie(['Backdrop_visitor_login_history' => '9-1'], $this->salt);
   }
 
   /**
@@ -60,7 +60,7 @@ class LoginHistoryCookieTest extends PHPUnit_Framework_TestCase {
   public function testCookieDataStructure() {
     // The cookie should be 3 strings separated by hyphens.
     $this->setExpectedException('Exception', 'Login history cookie data not structured properly.');
-    login_history_get_device_id_from_cookie(['Drupal_visitor_login_history' => '9-1-0'], $this->salt);
+    login_history_get_device_id_from_cookie(['Backdrop_visitor_login_history' => '9-1-0'], $this->salt);
   }
 
   /**
@@ -69,7 +69,7 @@ class LoginHistoryCookieTest extends PHPUnit_Framework_TestCase {
   public function testCookieDataContents() {
     // The cookie should be 3 strings separated by hyphens.
     $this->setExpectedException('Exception', 'Invalid login history hmac');
-    $derived_device_id = login_history_get_device_id_from_cookie(['Drupal_visitor_login_history' => '5b58eada6ac8e705e03b4c26c63800f1fdd88e3f93a2fefa04cff04db04ac952-1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5-1'], $this->salt);
+    $derived_device_id = login_history_get_device_id_from_cookie(['Backdrop_visitor_login_history' => '5b58eada6ac8e705e03b4c26c63800f1fdd88e3f93a2fefa04cff04db04ac952-1426aed16098dc76268e242dd88e325fa9e96ed7b1e88fae65488eece5079cc5-1'], $this->salt);
   }
 
 }

@@ -1,0 +1,5 @@
+[LoginHistoryTestCase]
+name = Login History Test
+description = Test Login History module functionality.
+group = Login History
+file = login_history.test

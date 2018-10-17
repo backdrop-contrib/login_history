@@ -6,6 +6,17 @@
  */
 
 /**
+* Implements hook_config_info().
+*/
+function lhfingerprintjs2_config_info() {
+  $prefixes['lhfingerprintjs2.settings'] = array(
+    'label' => t('LH Fingerprint JS'),
+    'group' => t('Configuration'),
+  );
+  return $prefixes;
+}
+
+/**
  * Implements hook_login_history_detect_device().
  */
 function lhfingerprintjs2_login_history_detect_device_alter(&$detection, $edit, $account) {
@@ -26,7 +37,7 @@ function lhfingerprintjs2_login_history_detect_device_alter(&$detection, $edit, 
  * Implements hook_login_history_detection_results().
  */
 function lhfingerprintjs2_login_history_detection_results($login_id, $detection, $old_device_id, $device_id, $account) {
-  if (variable_get('lhfingerprintjs2_record_login_data', TRUE)) {
+  if (config_get('lhfingerprintjs2.settings', 'lhfingerprintjs2_record_login_data')) {
     $fingerprintjs = array_key_exists('fingerprintjs2', $detection) ? $detection['fingerprintjs2'] : '';
     // Use the login_id and save the raw data for later analysis.
     db_insert('lhfingerprintjs2')
@@ -48,8 +59,8 @@ function lhfingerprintjs2_library() {
     'website' => 'https://github.com/Valve/fingerprintjs2',
     'version' => '1.4.2',
     'js' => array(
-      drupal_get_path('module', 'lhfingerprintjs2') . '/fingerprint2.min.js' => array(),
-      drupal_get_path('module', 'lhfingerprintjs2') . '/lhfingerprintjs2.js' => array(),
+      backdrop_get_path('module', 'lhfingerprintjs2') . '/js/fingerprint2.min.js' => array(),
+      backdrop_get_path('module', 'lhfingerprintjs2') . '/js/lhfingerprintjs2.js' => array(),
     ),
   );
 

@@ -14,7 +14,7 @@
  * @param array $cookie
  *   The cookie array i.e. $_COOKIE.
  * @param string $salt
- *   The salt, e.g. from drupal_get_hash_salt().
+ *   The salt, e.g. from backdrop_get_hash_salt().
  *
  * @return string
  *   The device id, if it exists and is authenticated by the hmac.
@@ -24,17 +24,17 @@
  */
 function login_history_get_device_id_from_cookie($cookie, $salt) {
   // Is the cookie value even set?
-  if (array_key_exists('Drupal_visitor_login_history', $cookie)) {
+  if (array_key_exists('Backdrop_visitor_login_history', $cookie)) {
 
     // Are the elements set? Does it have some data right elements?
-    $potential_device_message = explode('-', $cookie['Drupal_visitor_login_history']);
+    $potential_device_message = explode('-', $cookie['Backdrop_visitor_login_history']);
     if (3 == count($potential_device_message)) {
 
       list($message_hmac, $device_id, $login_id) = $potential_device_message;
       // Test all the required data is present and minimally valid.
       if (strlen($message_hmac) == 64 && strlen($device_id) == 64 && !empty($login_id)) {
         // If the hmac is valid, return the device id.
-        if (hash_equals(login_history_assemble_cookie($device_id, $login_id, $salt), $cookie['Drupal_visitor_login_history'])) {
+        if (hash_equals(login_history_assemble_cookie($device_id, $login_id, $salt), $cookie['Backdrop_visitor_login_history'])) {
           return $device_id;
         }
         throw new Exception('Invalid login history hmac');
@@ -57,7 +57,7 @@ function login_history_get_device_id_from_cookie($cookie, $salt) {
  * @param int $login_id
  *   The login_history.login_id.
  * @param $salt
- *   The salt, e.g. from drupal_get_hash_salt().
+ *   The salt, e.g. from Backdrop_get_hash_salt().
  *
  * @return string
  *   A signed string to set in a cookie.
